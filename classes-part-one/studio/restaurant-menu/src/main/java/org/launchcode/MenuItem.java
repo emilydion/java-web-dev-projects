@@ -1,20 +1,23 @@
 package org.launchcode;
 import java.time.LocalDate;
+import java.time.Month;
+import java.text.DecimalFormat;
 
 public class MenuItem {
     private String itemName;
     private double price;
     private String description;
     private String category;
-    public boolean isNew = true;
-    private final LocalDate date;
+    public boolean isNew;
+    private LocalDate date;
 
-    public MenuItem(String itemName, double price, String description, String category) {
+    public MenuItem(String itemName, double price, String description, String category, LocalDate date) {
         this.itemName = itemName;
         this.price = price;
         this.description = description;
         this.category = category;
-        this.date = LocalDate.now();
+        this.date = date;
+        this.isNew = determineIsNew();
     }
 
     public String getItemName() { return itemName; }
@@ -35,10 +38,25 @@ public class MenuItem {
     }
 
     public void setCategory(String category) {
-        this.category = category;
+        if (category.equals("appetizer") || category.equals("main course") || category.equals("dessert")) {
+            this.category = category;
+        } else {
+            this.category = "Undefined";
+        }
+    }
+
+    public boolean determineIsNew() {
+        LocalDate compareDate = LocalDate.of(2023, Month.JUNE, 30);
+        isNew = this.date.isAfter(compareDate);
+        return isNew;
     }
 
     public void printMenuItem() {
-
+        DecimalFormat priceFormat = new DecimalFormat("#.00");
+        if (isNew) {
+            System.out.println("NEW!");
+        }
+        System.out.println(itemName + " ($" + priceFormat.format(price) + ")");
+        System.out.println(description + "\n");
     }
 }
