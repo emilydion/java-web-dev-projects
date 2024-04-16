@@ -1,4 +1,7 @@
 package org.launchcode;
+
+import java.util.Arrays;
+
 public class BalancedBrackets {
     /*
      * The function BalancedBrackets should return true if and only if
@@ -19,15 +22,54 @@ public class BalancedBrackets {
      * @param str - to be validated
      * @return true if balanced, false otherwise
      */
-    public static boolean hasBalancedBrackets(String str) {
+    public static int findBracketPairs(char [] charArray) {
         int brackets = 0;
-        for (char ch : str.toCharArray()) {
+        int index = 0;
+
+        for (char ch : charArray) {
+            index++;
             if (ch == '[') {
                 brackets++;
-            } else if (ch == ']') {
-                brackets--;
+                break;
             }
         }
+
+        char [] charArrayEnd = Arrays.copyOfRange(charArray, index, charArray.length);
+        for (char ch : charArrayEnd) {
+            index++;
+            if (ch == ']') {
+                brackets--;
+                break;
+            }
+        }
+
+        return brackets;
+    }
+
+    public static boolean hasBalancedBrackets(String str) {
+        int brackets = 0;
+//        int index = 0;
+
+        char [] charArray = str.toCharArray();
+//        for (char ch : charArray) {
+//            index++;
+//            if (ch == '[') {
+//                brackets++;
+//                break;
+//            }
+//        }
+//
+//        char [] charArrayEnd = Arrays.copyOfRange(charArray, index, charArray.length);
+//        for (char ch : charArrayEnd) {
+//            index++;
+//            if (ch == ']') {
+//                brackets--;
+//            }
+//        }
+        brackets = findBracketPairs(charArray);
+
         return brackets == 0;
+
+     //   return brackets == 0;
     }
 }
